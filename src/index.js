@@ -6,6 +6,8 @@ const app = express()
 const port = 3000
 // app.use(morgan('combined'))
 
+const route= require('./routes')
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(express.urlencoded({
@@ -15,29 +17,13 @@ app.use(express.json())
 
 //Template engine
 app.engine('.hbs', handlebars({extname: '.hbs'}));
-
 app.set('view engine', '.hbs');
-
 app.set('views', path.join(__dirname, 'resources/views'));
-
 console.log(path.join(__dirname, 'views'));
 
 
-app.get('/', (req, res) => {
-  res.render('home');
-})
-app.get('/news', (req, res) => {
-  res.render('news');
-})
-app.get('/search', (req, res) => {
- 
-  res.render('search');
-})
-app.post('/search', (req, res) => {
+route(app)
 
- console.log(req.body)
-  res.send('');
-})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
